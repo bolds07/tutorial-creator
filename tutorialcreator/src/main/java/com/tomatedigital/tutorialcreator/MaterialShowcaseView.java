@@ -12,6 +12,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -117,9 +118,9 @@ public class MaterialShowcaseView extends FrameLayout implements OnTouchListener
     }
 
     private static int getSoftButtonsBarSizePort(Window window) {
-        if (VERSION.SDK_INT < 17) {
+        if (VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
             return 0;
-        }
+
 
 //        window.
 //        DisplayMetrics metrics = new DisplayMetrics();
