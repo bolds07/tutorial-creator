@@ -51,7 +51,7 @@ public class CircularRevealAnimationFactory implements IAnimationFactory {
         animator.start();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     public void animateOutView(@NonNull View target, @NonNull Point point, long duration, @NonNull final AnimationEndListener listener) {
         Animator animator = ViewAnimationUtils.createCircularReveal(target, point.x, point.y,
