@@ -25,7 +25,7 @@ public class CircularRevealAnimationFactory implements IAnimationFactory {
     @Override
     public void animateInView(@NonNull View target, @NonNull Point point, long duration, @NonNull final AnimationStartListener listener) {
         Animator animator = ViewAnimationUtils.createCircularReveal(target, point.x, point.y, 0,
-                target.getWidth() > target.getHeight() ? target.getWidth() : target.getHeight());
+                Math.max(target.getWidth(), target.getHeight()));
         animator.setDuration(duration).addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -55,7 +55,7 @@ public class CircularRevealAnimationFactory implements IAnimationFactory {
     @Override
     public void animateOutView(@NonNull View target, @NonNull Point point, long duration, @NonNull final AnimationEndListener listener) {
         Animator animator = ViewAnimationUtils.createCircularReveal(target, point.x, point.y,
-                target.getWidth() > target.getHeight() ? target.getWidth() : target.getHeight(), 0);
+                Math.max(target.getWidth(), target.getHeight()), 0);
         animator.setDuration(duration).addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {

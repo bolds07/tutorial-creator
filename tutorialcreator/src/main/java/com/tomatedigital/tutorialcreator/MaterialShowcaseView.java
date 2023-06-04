@@ -138,12 +138,7 @@ public class MaterialShowcaseView extends FrameLayout implements OnTouchListener
         setWillNotDraw(false);
         this.mListeners = new ArrayList<>();
 
-        this.observer = new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                setTarget(mTarget);
-            }
-        };
+        this.observer = () -> setTarget(mTarget);
         getViewTreeObserver().addOnGlobalLayoutListener(this.observer);
         setOnTouchListener(this);
         setVisibility(View.GONE);
@@ -515,12 +510,7 @@ public class MaterialShowcaseView extends FrameLayout implements OnTouchListener
         ((ViewGroup) window.getDecorView()).addView(this);
         setShouldRender();
         this.mHandler = new Handler();
-        this.mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animateIn();
-            }
-        }, this.mDelayInMillis);
+        this.mHandler.postDelayed(() -> animateIn(), this.mDelayInMillis);
         updateDismissButton();
     }
 
@@ -535,23 +525,17 @@ public class MaterialShowcaseView extends FrameLayout implements OnTouchListener
 
     private void animateIn() {
         setVisibility(View.INVISIBLE);
-        this.mAnimationFactory.animateInView(this, this.mTarget.getPoint(), this.mFadeDurationInMillis, new IAnimationFactory.AnimationStartListener() {
-            @Override
-            public void onAnimationStart() {
-                setVisibility(View.VISIBLE);
-                notifyOnDisplayed();
-            }
+        this.mAnimationFactory.animateInView(this, this.mTarget.getPoint(), this.mFadeDurationInMillis, () -> {
+            setVisibility(View.VISIBLE);
+            notifyOnDisplayed();
         });
     }
 
     private void animateOut() {
-        this.mAnimationFactory.animateOutView(this, this.mTarget.getPoint(), this.mFadeDurationInMillis, new IAnimationFactory.AnimationEndListener() {
-            @Override
-            public void onAnimationEnd() {
-                setVisibility(INVISIBLE);
-                removeFromWindow();
+        this.mAnimationFactory.animateOutView(this, this.mTarget.getPoint(), this.mFadeDurationInMillis, () -> {
+            setVisibility(INVISIBLE);
+            removeFromWindow();
 
-            }
         });
     }
 
